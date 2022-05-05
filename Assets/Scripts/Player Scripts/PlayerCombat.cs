@@ -53,6 +53,7 @@ public class PlayerCombat : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
+                //control player attack speed using real time
                 Attack();
                 attackTime = Time.time + 1f / attackSpeed;
             }
@@ -64,6 +65,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (!isInvincible)
         {
+            //invincibility frames after being hit
             StartCoroutine(becomeInvincible());
         }
     }
@@ -78,6 +80,7 @@ public class PlayerCombat : MonoBehaviour
 
     void Attack()
     {
+        // use a collider on attack point and add all enemies in collision to an array, then apply damage, knockback, and bleed to all
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         RaycastHit2D enemyBelow = Physics2D.BoxCast(playerHitbox.bounds.center, playerHitbox.bounds.size, 0f, Vector2.down, 2f, enemyLayers);
         if (detectEnemy())

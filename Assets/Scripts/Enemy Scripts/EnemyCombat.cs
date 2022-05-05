@@ -23,6 +23,7 @@ public class EnemyCombat : MonoBehaviour
 
     void Start()
     {
+        
         currentHealth = maxHealth;
         duck = GetComponent<SpriteRenderer>();
     }
@@ -30,21 +31,26 @@ public class EnemyCombat : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //placeholder until visuals are implemented
         Debug.Log(bleedStacks + "bleed applied");
     }
 
     public void takeDamage(int damage)
     {
+
         currentHealth -= damage;
+        // display damage taken after a hit 
         GameObject points = Instantiate(floatingPoint, transform.position, Quaternion.identity) as GameObject;
         if (damage >= 100)
         {
+            // if the hit is a critical hit, text is red
             points.transform.GetChild(0).GetComponent<TextMesh>().color = Color.red;
         }
         else
         {
             points.transform.GetChild(0).GetComponent<TextMesh>().color = Color.white;
         }
+        // display amount of damage being taken 
         points.transform.GetChild(0).GetComponent<TextMesh>().text = damage.ToString();
 
         if(currentHealth <= 0)
@@ -55,6 +61,7 @@ public class EnemyCombat : MonoBehaviour
 
     void die()
     {
+        // stop movement and disable collisions
         animator.SetBool("Dead", true);
         GetComponent<Collider2D>().enabled = false;
 

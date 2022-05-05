@@ -33,13 +33,15 @@ public class DuckBehavior : MonoBehaviour
     {
         if(animator.GetBool("Dead") == true)
         {
-            direction = 0;
+            direction = 0; //stop moving
         }
         if (detectPlayer())
         {
-            player.GetComponent<Rigidbody2D>().AddForce(knockbackForce, ForceMode2D.Impulse);
+            //if collision happens between player and duck, deal damage and knock them back
+            player.GetComponent<Rigidbody2D>().AddForce(knockbackForce, ForceMode2D.Impulse); 
             playerCombat.GetComponent<PlayerCombat>().takeDamage(collisionDamage);
         }
+        // if an edge of a platform is detected, change direction
         if (detectEdge() != true)
         {
             transform.Translate(Vector2.left * Time.deltaTime * direction * movementSpeed);
@@ -61,7 +63,8 @@ public class DuckBehavior : MonoBehaviour
             }
         }
     }
-    
+
+    //raycast left, right, and up to detect which direction knockback will send players on collision
     bool detectPlayer()
     {
         RaycastHit2D AttackL = Physics2D.BoxCast(duckHitBox.bounds.center, duckHitBox.bounds.size, 0f, Vector2.left, 0.1f, playerLayer);
