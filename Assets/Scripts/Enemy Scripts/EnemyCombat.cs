@@ -6,8 +6,8 @@ public class EnemyCombat : MonoBehaviour
 {
 
     public int bleedStacks = 0;
-    private SpriteRenderer duck;
-    public Rigidbody2D duckRigidBody;
+    private SpriteRenderer enemy;
+    public Rigidbody2D rb;
     public Animator animator;
     public int attackDamage = 10;
     public int maxHealth = 100;
@@ -17,7 +17,7 @@ public class EnemyCombat : MonoBehaviour
 
     private void Awake()
     {
-        duckRigidBody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
     // Start is called before the first frame update
 
@@ -25,14 +25,13 @@ public class EnemyCombat : MonoBehaviour
     {
         
         currentHealth = maxHealth;
-        duck = GetComponent<SpriteRenderer>();
+        enemy = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        //placeholder until visuals are implemented
-        Debug.Log(bleedStacks + "bleed applied");
+
     }
 
     public void takeDamage(int damage)
@@ -65,12 +64,12 @@ public class EnemyCombat : MonoBehaviour
         animator.SetBool("Dead", true);
         GetComponent<Collider2D>().enabled = false;
 
-        duckRigidBody.velocity = Vector3.zero;
-        duckRigidBody.angularVelocity = 0f;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = 0f;
         
-        duckRigidBody.gravityScale = 0;
-        duck.sortingOrder = 1;
-        duck.sortingLayerName = "Background";
+        rb.gravityScale = 0;
+        enemy.sortingOrder = 1;
+        enemy.sortingLayerName = "Background";
         this.enabled = false;
     }
 }
